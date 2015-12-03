@@ -135,8 +135,8 @@ ntpstatus() {
     esac
 }
 
-# Gets configured servers and attempts to contact them.
-check_servers() {
+# Get configured peers and attempt to contact them.
+check_peers() {
     SERVERS=""
     if [ -e ${NTP_CONF} ]; then
         SERVERS=$(grep ^server $NTP_CONF | sed 's/server //')
@@ -148,7 +148,7 @@ check_servers() {
     missing=""
     SUCCESS=0
     TOTAL=0
-    for server in $SERVERS; do
+    for server in ${SERVERS}; do
         TOTAL=$((TOTAL+1))
          ntpdate -q $server > /dev/null 2>&1
          if [ $? -eq 0 ]; then
@@ -169,8 +169,8 @@ if [ $ISRUNNING -eq 1 ]; then
     printf "ntpd seems to be running, running checks.\n"
     printf "\nntpstat\n=======\n"
     ntpstatus
+    printf "\nCheck Peers\n=============\n( may take some time )\n"
+    check_peers
     printf "\nPeer Count\n==========\n"
     peer_count
-    printf "\nCheck Servers\n=============\n( may take some time )\n"
-    check_servers
 fi
