@@ -28,6 +28,12 @@
 # As per the above warranty, I do not guarantee that this script is of any
 # practical use - use at your own discretion.
 #
+# See the Troubleshooting section from the ntp website:
+#   http://support.ntp.org/bin/view/Support/TroubleshootingNTP
+#
+# This script assumes an already configured setup & can be used to check that
+# everything is working as it should be.
+#
 # When troubleshooting ntpd problems, remember that any firewalls you have
 # should be configured to allow unrestricted access to UDP port 123 in both
 # directions.
@@ -35,7 +41,6 @@
 # ntpdate and ntpd use unprivileged, high port numbers so you may be able to
 # query with these utilities but ntpd may still not work if the firewall
 # configuration has not been done.
-#
 #
 
 # Location of ntp.conf - used to get peers servers
