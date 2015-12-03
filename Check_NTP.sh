@@ -149,7 +149,7 @@ check_peers() {
     SUCCESS=0
     TOTAL=0
     for server in ${SERVERS}; do
-        TOTAL=$((TOTAL+1))
+         TOTAL=$((TOTAL+1))
          ntpdate -q $server > /dev/null 2>&1
          if [ $? -eq 0 ]; then
             SUCCESS=$((SUCCESS+1))
@@ -163,6 +163,24 @@ check_peers() {
     fi
 }
 
+get_variables() {
+    ERR_FILE="/tmp/values_$$"
+    VARS="version stratum offset"
+    for var in $VARS; do
+        result=$( ntpq -c "readvar 0 $var" 2> $ERR_FILE )
+        if [ -s $ERR_FILE ]; then
+            printf "Got error: $(cat $ERR_FILE) while trying to contact ntpd\n"
+            break
+        fi
+        if [ -z "$result" ]; then
+            print "Got no result when trying to get: $item"
+            next
+        fi
+        value=$(echo $result | sed "s/^[^=]\+=//")
+        printf "$var: $value\n"
+    done
+}
+
 # Main
 check_running
 if [ $ISRUNNING -eq 1 ]; then
@@ -173,4 +191,6 @@ if [ $ISRUNNING -eq 1 ]; then
     check_peers
     printf "\nPeer Count\n==========\n"
     peer_count
+    printf "\nVariables\n"
+    get_variables
 fi
