@@ -139,7 +139,7 @@ ntpstatus() {
 check_peers() {
     SERVERS=""
     if [ -e ${NTP_CONF} ]; then
-        SERVERS=$(grep ^server $NTP_CONF | sed 's/server //')
+        SERVERS=$(grep ^server $NTP_CONF | awk '{print $2}' )
     else
         printf "$NTP_CONF: doesn't exist.\n"
         return
