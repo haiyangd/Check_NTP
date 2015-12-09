@@ -28,3 +28,5 @@ Requires root privileges, so either as root:
 
 or as an ordinary user:
 	sudo ./Check_NTP.sh
+
+See: https://blog.steel-eyed.com/troubleshooting-ntp/
