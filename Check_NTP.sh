@@ -185,12 +185,12 @@ get_variables() {
 check_running
 if [ $ISRUNNING -eq 1 ]; then
     printf "ntpd seems to be running, running checks.\n"
-    printf "\nntpstat\n=======\n"
+    printf "\n1. ntpstat\n==========\n"
     ntpstatus
-    printf "\nCheck Peers\n=============\n( may take some time )\n"
+    printf "\n2. Check Peers\n==============\n( may take some time )\n"
     check_peers
-    printf "\nPeer Count\n==========\n"
+    printf "\n3. Peer Count\n=============\n"
     peer_count
-    printf "\nVariables\n"
+    printf "\n4. Variables\n============\n"
     get_variables
 fi
