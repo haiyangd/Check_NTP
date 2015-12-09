@@ -104,10 +104,13 @@ peer_count() {
     # if $ERR_FILE is not empty then we have an error.
     if [ -s $ERR_FILE ]; then
         printf "Can't get peers list: $(cat $ERR_FILE)\n"
-    else
-        printf "Number of peers = $COUNT\n"
+        remove_files $ERR_FILE
+        return
     fi
-    remove_files $ERR_FILE
+    printf "Number of peers = $COUNT\n"
+    if [ $TOTAL -ne $COUNT ]; then
+        printf "Configured peers = $TOTAL, peers known to server = $COUNT\n"
+    fi
 }
 
 # Deletes any files passed.
